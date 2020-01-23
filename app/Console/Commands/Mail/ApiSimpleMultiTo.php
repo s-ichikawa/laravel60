@@ -51,27 +51,30 @@ class ApiSimpleMultiTo extends Command
                 ->subject('[Sample] simple mail.')
                 ->to('ichikawa.shingo.0829+reply@gmail.com')
                 ->from("ichikawa.shingo.0829@gmail.com", "Shingo Ichikawa")
-                ->replyTo('ichikawa.shingo.0829+reply@gmail.com')
+                ->replyTo('ichikawa.shingo.0829+reply@gmail.com', "s-ichikawa")
                 ->embedData(self::sgEncode([
                     'personalizations' => [
                         [
                             'to' => [
-                                'email' => 'ichikawa.shingo.0829+to1@gmail.com',
-                                'name' => 's-ichikawa1',
+                                [
+                                    'email' => 'ichikawa.shingo.0829+to1@gmail.com',
+                                    'name' => 's-ichikawa1',
+                                ],
+                                [
+                                    'email' => 'ichikawa.shingo.0829+to2@gmail.com',
+                                    'name' => 's-ichikawa2',
+                                ],
                             ],
                             'dynamic_template_data' => [
-                                'name' => 'Shingo Ichikawa',
+                                'name' => 'Shingo Ichikawa san',
                             ],
+                            'custom_args' => [
+                                'personalized_args' => '🍣',
+                            ]
                         ],
-                        [
-                            'to' => [
-                                'email' => 'ichikawa.shingo.0829+to2@gmail.com',
-                                'name' => 's-ichikawa2',
-                            ],
-                            'dynamic_template_data' => [
-                                'name' => 'Shingo Ichikawa',
-                            ],
-                        ],
+                    ],
+                    'custom_args' => [
+                        'global_arg' => '🍺'
                     ],
                     'template_id' => config('services.sendgrid.templates.dynamic_sample')
                 ]), SendgridTransport::SMTP_API_NAME);
